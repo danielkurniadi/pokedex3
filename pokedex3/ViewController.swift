@@ -46,7 +46,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 for row in rows{
                     let pokeId = Int(row["id"]!)!
                     let name = row["identifier"]!
-                    print("\(pokeId), \(name)")
+//                    print("\(pokeId), \(name)")
                     pokemons.append(Pokemon(name: name.capitalized, pokedexId: pokeId))
                 }
                 
@@ -138,6 +138,24 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        let pokemon : Pokemon
+        if (inSearchMode){
+            pokemon = filteredPokemons[indexPath.row]
+        }
+        else {
+            pokemon = pokemons[indexPath.row]
+        }
+        performSegue(withIdentifier: "PokemonDetailVC", sender: pokemon)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "PokemonDetailVC"){
+            if let detailVC = segue.destination as? PokemonDetailVC{
+                if let pokemon = sender as? Pokemon{
+                    detailVC.pokemon = pokemon
+                }
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
