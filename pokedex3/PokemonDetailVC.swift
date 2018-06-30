@@ -19,14 +19,19 @@ class PokemonDetailVC: UIViewController {
     @IBOutlet weak var defenseLabel: UILabel!
     @IBOutlet weak var lengthLabel: UILabel!
     @IBOutlet weak var weightLabel: UILabel!
-    @IBOutlet weak var pokedexLabel: UILabel!
     @IBOutlet weak var attackLabel: UILabel!
     @IBOutlet weak var evolutionLabel: UILabel!
+    @IBOutlet weak var pokedexLabel: UILabel!
+    @IBOutlet weak var currentEvoImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        nameLabel.text = pokemon.name
+        nameLabel.text = self.pokemon.name
+        pokedexLabel.text = "\(self.pokemon.pokedexId)"
+        mainImage.image = UIImage(named: "\(self.pokemon.pokedexId)")
+        currentEvoImage.image = UIImage(named: "\(self.pokemon.pokedexId)")
+        
         pokemon.downloadPokemonData {
             //Code after network call complete
             print("download finished")
